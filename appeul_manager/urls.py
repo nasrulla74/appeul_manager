@@ -18,4 +18,7 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('dashboard/', login_required(views.dashboard), name='dashboard'),
     path('control/<str:action>/', login_required(views.control_server), name='control_server'),
+    path('backup/', login_required(views.backup_database), name='backup_database'),
+
+
 ]

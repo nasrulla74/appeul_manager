@@ -3,29 +3,29 @@
 # Odoo database backup script
 
 # Configuration variables
-ODOO_DB_NAME="appeul"
-BACKUP_DIR="/home/odoo/backup"
-BACKUP_FILENAME="odoo_backup_$(date +%Y%m%d_%H%M%S).sql"
-PG_USER="odoo"
+DB_NAME="demo"
+BACKUP_DIR="/odoo/bk"
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILENAME="odoo_backup_${TIMESTAMP}.sql"
 
-# Create backup directory if it doesn't exist
-mkdir -p "$BACKUP_DIR"
+# Change to a directory where odoo_control has access
+cd /tmp
 
-# Perform database backup
-sudo -u odoo pg_dump -F c -b -v -f "$BACKUP_DIR/$BACKUP_FILENAME" "$ODOO_DB_NAME"
+# Perform the backup
+sudo -u postgres pg_dump $DB_NAME > $BACKUP_DIR/$BACKUP_FILENAME
 
-# Check if backup was successful
+# Check if the backup was successful
 if [ $? -eq 0 ]; then
     echo "Backup completed successfully: $BACKUP_DIR/$BACKUP_FILENAME"
+    # Optional: Compress the backup file
+    gzip "$BACKUP_DIR/$BACKUP_FILENAME"
+    echo "Backup compressed: $BACKUP_DIR/${BACKUP_FILENAME}.gz"
+    
+    # Optional: Remove backups older than 30 days
+    find "$BACKUP_DIR" -name "odoo_backup_*.sql.gz" -type f -mtime +30 -delete
+    
+    exit 0
 else
     echo "Backup failed"
     exit 1
 fi
-
-# Optional: Remove backups older than 30 days
-find "$BACKUP_DIR" -name "odoo_backup_*.sql" -type f -mtime +30 -delete
-
-# Optional: Compress the backup file
-gzip "$BACKUP_DIR/$BACKUP_FILENAME"
-
-echo "Backup process completed"

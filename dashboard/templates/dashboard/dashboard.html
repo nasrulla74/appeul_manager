@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h2>Server Control Dashboard</h2>
+
 <h1>Odoo Server Dashboard</h1>
 <p>Welcome, {{ user.email }}</p>
 <p>Server status: {% if status.is_running %}Running{% else %}Stopped{% endif %}</p>
@@ -10,4 +12,7 @@
 <a href="{% url 'control_server' 'status' %}">Check Status</a>
 <br>
 <a href="{% url 'logout' %}">Logout</a>
+
+<h3>Database Backup</h3>
+<a href="{% url 'backup_database' %}" class="btn btn-primary">Backup Database</a>
 {% endblock %}

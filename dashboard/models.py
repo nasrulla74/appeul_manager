@@ -37,3 +37,13 @@ class CustomUser(AbstractUser):
 class ServerStatus(models.Model):
     is_running = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
+
+class BackupLog(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    filename = models.CharField(max_length=255)
+    success = models.BooleanField()
+    output = models.TextField(blank=True)
+    error = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.timestamp} - {'Success' if self.success else 'Failure'}"

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Database Backup Result</h2>
+
+{% if success %}
+    <p>Backup completed successfully!</p>
+    <p>Filename: {{ filename }}</p>
+    <p>File Location: {{ file_location }}</p>
+{% else %}
+    <p>Backup failed.</p>
+{% endif %}
+
+{% if output %}
+    <h3>Output:</h3>
+    <pre>{{ output }}</pre>
+{% endif %}
+
+{% if error %}
+    <h3>Error:</h3>
+    <pre>{{ error }}</pre>
+{% endif %}
+
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}
