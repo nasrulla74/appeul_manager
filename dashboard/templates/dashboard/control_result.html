@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Server Control Result</h1>
+<p><strong>Action:</strong> {{ action }}</p>
+
+<h2>Output:</h2>
+{% if output %}
+    <pre>{{ output }}</pre>
+{% else %}
+    <p>No output received.</p>
+{% endif %}
+
+{% if error %}
+    <h2>Error:</h2>
+    <pre>{{ error }}</pre>
+{% endif %}
+
+<h2>Current Server Status:</h2>
+<p>{% if status.is_running %}Running{% else %}Stopped{% endif %}</p>
+
+<a href="{% url 'dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
+{% endblock %}

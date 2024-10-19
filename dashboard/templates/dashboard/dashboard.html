@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Odoo Server Dashboard</h1>
+<p>Welcome, {{ user.email }}</p>
+<p>Server status: {% if status.is_running %}Running{% else %}Stopped{% endif %}</p>
+<p>Last updated: {{ status.last_updated }}</p>
+<a href="{% url 'control_server' 'start' %}">Start Server</a>
+<a href="{% url 'control_server' 'stop' %}">Stop Server</a>
+<a href="{% url 'control_server' 'status' %}">Check Status</a>
+<br>
+<a href="{% url 'logout' %}">Logout</a>
+{% endblock %}
